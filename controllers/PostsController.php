@@ -8,6 +8,7 @@ use app\models\PostsSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\filters\AccessControl;
 
 /**
  * PostsController implements the CRUD actions for Posts model.
@@ -22,6 +23,17 @@ class PostsController extends Controller
         return array_merge(
             parent::behaviors(),
             [
+                'access' => [
+                    'class' => AccessControl::classname(),
+                    'only' => ['create','update'],
+                    'rules' => [
+                        [
+                            'allow' => true,
+                            'roles' => ['@']
+                        ],
+                    ]
+
+                ],
                 'verbs' => [
                     'class' => VerbFilter::className(),
                     'actions' => [
